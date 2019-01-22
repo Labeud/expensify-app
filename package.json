@@ -6,8 +6,9 @@
   "scripts": {
     "serve": "live-server public/",
     "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
-    "build": "webpack",
-    "dev-server": "webpack-dev-server --mode development",
+    "build:dev": "webpack --config webpack.dev.js --env development",
+    "build:prod": "webpack --config webpack.prod.js",
+    "dev-server": "webpack-dev-server --open --config webpack.dev.js",
     "test": "jest --config=jest.config.json"
   },
   "dependencies": {
@@ -18,7 +19,6 @@
     "@babel/preset-react": "^7.0.0",
     "babel-cli": "6.24.1",
     "babel-loader": "^8.0.5",
-    "css-loader": "^2.1.0",
     "live-server": "^1.2.1",
     "moment": "^2.23.0",
     "node-sass": "^4.11.0",
@@ -31,21 +31,25 @@
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
     "uuid": "^3.3.2",
-    "validator": "^10.10.0",
-    "webpack": "^4.28.1",
-    "webpack-dev-server": "^3.1.14"
+    "validator": "^10.10.0"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
+    "css-loader": "^2.1.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "enzyme-to-json": "^3.3.5",
     "jest": "^23.6.0",
+    "mini-css-extract-plugin": "^0.5.0",
     "raf": "^3.4.1",
     "react-test-renderer": "^16.7.0",
-    "webpack-cli": "^3.2.1"
+    "style-loader": "^0.23.1",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.2.1"
   }
 }
