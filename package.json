@@ -9,7 +9,9 @@
     "build:dev": "webpack --config webpack.dev.js --env development",
     "build:prod": "webpack --config webpack.prod.js",
     "dev-server": "webpack-dev-server --open --config webpack.dev.js",
-    "test": "jest --config=jest.config.json"
+    "test": "jest --config=jest.config.json",
+    "start": "node server/server.js",
+    "heroku-postbuild": "yarn run bluid:prod"
   },
   "dependencies": {
     "@babel/core": "^7.2.2",
@@ -19,6 +21,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-cli": "6.24.1",
     "babel-loader": "^8.0.5",
+    "express": "^4.16.4",
     "live-server": "^1.2.1",
     "moment": "^2.23.0",
     "node-sass": "^4.11.0",
