@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "serve": "live-server public/",
     "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
     "build:dev": "webpack --config webpack.dev.js --env development",
     "build:prod": "webpack --config webpack.prod.js",
@@ -22,7 +21,6 @@
     "babel-cli": "6.24.1",
     "babel-loader": "^8.0.5",
     "express": "^4.16.4",
-    "live-server": "^1.2.1",
     "moment": "^2.23.0",
     "node-sass": "^4.11.0",
     "normalize.css": "^8.0.1",

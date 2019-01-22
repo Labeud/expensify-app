@@ -7,7 +7,7 @@ module.exports = {
   // entry:  "./src/playground/hoc.js",
   entry:  "./src/App.js",
   output: {
-    path: path.join(__dirname, "public"),
+    path: path.join(__dirname, "public", "dist"),
     filename: "bundle.js"
   },
   module: {
@@ -24,6 +24,7 @@ module.exports = {
     contentBase: path.join(__dirname, "public"),
     // To be sure that the server serves index.html each time 404 status comes back 
     // which is the case when you use /page in the url
-    historyApiFallback: true
+    historyApiFallback: true,
+    publicPath: "/dist/"
   }
 };
