@@ -11,6 +11,7 @@ export class ExpenseListFilters extends React.Component {
   onDatesChange = ({ startDate, endDate }) => {
     this.props.setStartDate(startDate);
     this.props.setEndDate(endDate);
+    console.log(this.props.filters);
   };
 
   onFocusChange = (calendarFocused) => {
@@ -65,7 +66,7 @@ const mapStateToProps = (state) => ({filters: state.filters});
 
 const mapDispatchToProps = (dispatch) => ({
   setStartDate: (startDate) => dispatch(setStartDate(startDate)),
-  setEndDate: (endDate) => setEndDate(endDate),
+  setEndDate: (endDate) => dispatch(setEndDate(endDate)),
   setTextFilter: (text) => dispatch(setTextFilter(text)),
   sortByDate: () => sortByDate(),
   sortByAmount: () => sortByAmount()
