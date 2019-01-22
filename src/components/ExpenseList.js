@@ -16,10 +16,10 @@ export const ExpenseList = (props) => (
   </div>
 );
 
-const mapStatToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     expenses: selectExpenses(state.expenses, state.filters)
   }
 }
 
-export default connect(mapStatToProps)(ExpenseList);
+export default connect(mapStateToProps)(ExpenseList);
