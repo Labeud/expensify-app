@@ -1,39 +1,58 @@
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack");
 
-// loader = an action each time a file is treated
-// babel-core is the equivalent of babel-cli
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-module.exports = {
-  // entry:  "./src/playground/hoc.js",
-  entry:  "./src/App.js",
-  output: {
-    path: path.join(__dirname, "public"),
-    filename: "bundle.js"
-  },
-  module: {
-    rules: [{
-      // This rule is to use babel only on some files
-      loader: "babel-loader",
-      // $ is to be sure that we are at the end
-      test: /\.js$/,
-      exclude: /node_modules/
-    }, {
-      test: /\.s?css$/,
-      // To use several loaders
-      use: [
-        "style-loader",
-        "css-loader",
-        "sass-loader"
-      ]
-    }]
-  },
-  devServer: {
-    // absolute path for index.html
-    contentBase: path.join(__dirname, "public"),
-    // To be sure that the server serves index.html each time 404 status comes back 
-    // which is the case when you use /page in the url
-    historyApiFallback: true
-  },
-  // Allows mapping the application to keep a track of the original source code
-  devtool: "cheap-module-eval-source-map"
+if (process.env.NODE_ENV === "test") {
+  require("dotenv").config({ path: ".env.test" });
+} else if (process.env.NODE_ENV === "development") {
+  require("dotenv").config({ path: ".env.development" });
+}
+
+module.exports = (env) => {
+  const isProduction = env === 'production';
+  console.log(isProduction);
+
+  return {
+    mode: isProduction ? "production" : "development",
+    entry:  "./src/App.js",
+    output: {
+      path: path.join(__dirname, "public", "dist"),
+      filename: "bundle.js"
+    },
+    module: {
+      rules: [{
+        loader: "babel-loader",
+        test: /\.js$/,
+        exclude: /node_modules/
+      }, {
+        test: /\.s?css$/,
+        use: [
+          isProduction ? MiniCssExtractPlugin.loader : "style-loader",
+          {loader: "css-loader", options: {sourceMap: true}},
+          {loader: "sass-loader", options: {sourceMap: true}}
+        ]
+      }]
+    },
+    devtool: isProduction ? "source-map" : "inline-source-map",
+    plugins: [ 
+      new MiniCssExtractPlugin({
+        filename: "styles.css"
+      }),
+      new webpack.DefinePlugin({
+        "process.env.FIREBASE_API_KEY": JSON.stringify(process.env.FIREBASE_API_KEY), 
+        "process.env.FIREBASE_AUTH_DOMAIN": JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN), 
+        "process.env.FIREBASE_DATABASE_URL": JSON.stringify(process.env.FIREBASE_DATABASE_URL), 
+        "process.env.FIREBASE_PROJECT_ID": JSON.stringify(process.env.FIREBASE_PROJECT_ID), 
+        "process.env.FIREBASE_STORAGE_BUCKET": JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET), 
+        "process.env.FIREBASE_MESSAGING_SENDER_ID": JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID), 
+      })
+    ],
+    devServer: {
+      contentBase: path.join(__dirname, "public"),
+      historyApiFallback: true,
+      publicPath: "/dist/"
+    },
+  };
 };
