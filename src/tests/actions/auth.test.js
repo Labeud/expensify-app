@@ -3,8 +3,6 @@ import {
   startLogout, logout
 } from "../../actions/auth";
 
-const createMockStore = configureMockStore([thunk]);
-
 test("should setup the login action", () => {
   const uid = "123abc";
   const action = login(uid);
